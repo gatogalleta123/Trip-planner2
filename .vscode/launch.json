@@ -1,0 +1,122 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Debug Eureka",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/eureka",
+      "mainClass": "cl.tripplanner.turismo.eureka.TurismoEurekaApplication",
+      "projectName": "cl-tripplanner-turismo-eureka",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-destinos",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-destinos",
+      "mainClass": "cl.tripplanner.turismo.destinos.TurismoDestinosApplication",
+      "projectName": "cl-tripplanner-turismo-destinos",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-reservas",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-reservas",
+      "mainClass": "cl.tripplanner.turismo.reservas.TurismoReservasApplication",
+      "projectName": "cl-tripplanner-turismo-reservas",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-pagos",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-pagos",
+      "mainClass": "cl.tripplanner.turismo.pagos.TurismoPagosApplication",
+      "projectName": "cl-tripplanner-turismo-pagos",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-hoteles",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-hoteles",
+      "mainClass": "cl.tripplanner.turismo.hoteles.TurismoHotelesApplication",
+      "projectName": "cl-tripplanner-turismo-hoteles",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-vuelos",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-vuelos",
+      "mainClass": "cl.tripplanner.turismo.vuelos.TurismoVuelosApplication",
+      "projectName": "cl-tripplanner-turismo-vuelos",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-auth",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-auth",
+      "mainClass": "cl.tripplanner.turismo.auth.TurismoAuthApplication",
+      "projectName": "cl-tripplanner-turismo-auth",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-notificaciones",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-notificaciones",
+      "mainClass": "cl.tripplanner.turismo.notificaciones.TurismoNotificacionesApplication",
+      "projectName": "cl-tripplanner-turismo-notificaciones",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-resennas",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-resennas",
+      "mainClass": "cl.tripplanner.turismo.resennas.TurismoResennasApplication",
+      "projectName": "cl-tripplanner-turismo-resennas",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-reportes",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-reportes",
+      "mainClass": "cl.tripplanner.turismo.reportes.TurismoReportesApplication",
+      "projectName": "cl-tripplanner-turismo-reportes",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-usuarios",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-usuarios",
+      "mainClass": "cl.tripplanner.turismo.usuarios.TurismoUsuariosApplication",
+      "projectName": "cl-tripplanner-turismo-usuarios",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug All Services",
+      "configurations": [
+        "Debug Eureka",
+        "Debug ms-destinos",
+        "Debug ms-reservas",
+        "Debug ms-pagos",
+        "Debug ms-hoteles",
+        "Debug ms-vuelos",
+        "Debug ms-auth",
+        "Debug ms-notificaciones",
+        "Debug ms-resennas",
+        "Debug ms-reportes",
+        "Debug ms-usuarios"
+      ]
+    }
+  ]
+}

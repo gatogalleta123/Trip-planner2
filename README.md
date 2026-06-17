@@ -1,2 +1,2 @@
-# Trip-planner2
-Copia de repositorio DFullstack
+# Trip-Planner
+Proyecto de Desarrollo Fullstack

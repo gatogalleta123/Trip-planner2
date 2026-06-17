@@ -1,0 +1,25 @@
+server:
+  port: 9008
+  error:
+    include-stacktrace: never
+
+spring:
+  application:
+    name: ms-resennas
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/resennas
+    username: postgres
+    password: 123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
