@@ -1,6 +1,9 @@
 package cl.tripplanner.common;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
+
+import cl.tripplanner.common.security.JwtProperties;
 
 /**
  * Auto-configuración de la librería common.
@@ -18,6 +21,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @AutoConfiguration
 @ComponentScan(basePackages = "cl.tripplanner.common")
+@EnableConfigurationProperties(JwtProperties.class)
 public class CommonAutoConfiguration {
     // Clase de configuración pura: no necesita cuerpo.
     // Spring Boot la procesa al arrancar cualquier microservicio

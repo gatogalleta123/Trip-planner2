@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Temporal",
+      "request": "launch",
+      "mainClass": "cl.tripplanner.turismo.auth.Temporal",
+      "projectName": "cl-tripplanner-turismo-auth"
+    },
+    {
+      "type": "java",
       "name": "Debug Eureka",
       "request": "launch",
       "cwd": "${workspaceFolder}/eureka",

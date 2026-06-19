@@ -52,6 +52,8 @@ CREATE TABLE usuarios (
 
     nombre VARCHAR(100) NOT NULL,
 
+    password VARCHAR(255) NOT NULL,
+
     telefono VARCHAR(30),
 
     fecha_registro DATE NOT NULL,
@@ -99,20 +101,65 @@ VALUES
 INSERT INTO roles
 (nombre, descripcion, activo)
 VALUES
-('admin', 'Administrador del sistema', TRUE),
-('agente', 'Agente de viajes y atención al cliente', TRUE),
-('operador', 'Gestiona servicios y reservas', TRUE),
-('invitado', 'Acceso limitado', FALSE);
+('ROLE_ADMIN', 'Administrador del sistema', TRUE),
+('ROLE_AGENTE', 'Agente de viajes y atención al cliente', TRUE),
+('ROLE_OPERADOR', 'Gestiona servicios y reservas', TRUE),
+('ROLE_INVITADO', 'Acceso limitado', FALSE);
 
 INSERT INTO usuarios
-(email, nombre, telefono, fecha_registro, activo, rol_id, organizacion_id)
+(email, nombre, password, telefono, fecha_registro, activo, rol_id, organizacion_id)
 VALUES
-('admin@tripplanner.cl','Administrador','+56911111111','2026-01-10',TRUE,1, 1),
+(
+'admin@tripplanner.cl',
+'Administrador',
+'$2a$10$dCZppf07IAmZJzAnDmS2Ou0X0/T8QqfK/M6UBU9KV1ygbcItPuQam',
+'+56911111111',
+'2026-01-10',
+TRUE,
+1,
+1
+),
 
-('agente1@tripplanner.cl','Agente Uno','+56922222222','2026-02-05',TRUE,2,1),
+(
+'agente1@tripplanner.cl',
+'Agente Uno',
+'$2a$10$dCZppf07IAmZJzAnDmS2Ou0X0/T8QqfK/M6UBU9KV1ygbcItPuQam',
+'+56922222222',
+'2026-02-05',
+TRUE,
+2,
+1
+),
 
-('operador@viajesandinos.com','Operador Andes','+56933333333','2026-03-15',TRUE,3,2),
+(
+'operador@viajesandinos.com',
+'Operador Andes',
+'$2a$10$dCZppf07IAmZJzAnDmS2Ou0X0/T8QqfK/M6UBU9KV1ygbcItPuQam',
+'+56933333333',
+'2026-03-15',
+TRUE,
+3,
+2
+),
 
-('user@exploramundo.com','Usuario Explora','+56944444444','2026-04-20',TRUE,2,3),
+(
+'user@exploramundo.com',
+'Usuario Explora',
+'$2a$10$dCZppf07IAmZJzAnDmS2Ou0X0/T8QqfK/M6UBU9KV1ygbcItPuQam',
+'+56944444444',
+'2026-04-20',
+TRUE,
+2,
+3
+),
 
-('invitado@oldtravels.com','Invitado Demo','+56955555555','2026-05-01',FALSE,4,4);
+(
+'invitado@oldtravels.com',
+'Invitado Demo',
+'$2a$10$dCZppf07IAmZJzAnDmS2Ou0X0/T8QqfK/M6UBU9KV1ygbcItPuQam',
+'+56955555555',
+'2026-05-01',
+FALSE,
+4,
+4
+);

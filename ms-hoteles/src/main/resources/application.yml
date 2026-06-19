@@ -43,6 +43,12 @@ spring:
             trusted:
               packages: "*"
 
+#***** JWT *****
+#Contraseña desencriptada: "tokenSecretKeyTurismo2026TripplannerSecurity"
+jwt:
+  secret: "dG9rZW5TZWNyZXRLZXlUdXJpc21vMjAyNlRyaXBwbGFubmVyU2VjdXJpdHk="
+  expiration-ms: 3600000
+  
 eureka:
   client:
     register-with-eureka: true
