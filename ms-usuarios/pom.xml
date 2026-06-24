@@ -137,7 +137,7 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-        <!-- DEPENDENCIAS ADICIOALES C3 -->
+        <!-- DEPENDENCIAS ADICIONALES C3 -->
         <!-- [SWAGGER-INI] -->
         <!-- Springdoc OpenAPI: generacion automatica de documentacion Swagger UI -->
         <dependency>

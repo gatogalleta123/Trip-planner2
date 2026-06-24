@@ -47,6 +47,7 @@ jwt:
   #error:
     #include-stacktrace: never
 
+#http://localhost:9010/swagger-ui/index.html <- RUTA PARA PROBAR SWAGGER-UI
 # [SWAGGER-INI] 
 # Configuración de SpringDoc/Swagger UI
 springdoc:
