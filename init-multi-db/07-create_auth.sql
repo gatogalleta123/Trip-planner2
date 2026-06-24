@@ -98,35 +98,35 @@ INSERT INTO usuarios_auth (
 VALUES
 (
     'admin@tripplanner.cl',
-    'hash_admin_secure',
+    '$2a$10$dCZppf07IAmZJzAnDmS2Ou0X0/T8QqfK/M6UBU9KV1ygbcItPuQam',
     'LOCAL',
     TRUE,
     '2026-05-20 10:30:00'
 ),
 (
-    'user1@gmail.com',
-    'hash_user1_secure',
+    'agente1@tripplanner.cl',
+    '$2a$10$dCZppf07IAmZJzAnDmS2Ou0X0/T8QqfK/M6UBU9KV1ygbcItPuQam',
     'GOOGLE',
     TRUE,
     '2026-05-22 15:10:00'
 ),
 (
-    'user2@gmail.com',
-    'hash_user2_secure',
+    'operador@viajesandinos.com',
+    '$2a$10$dCZppf07IAmZJzAnDmS2Ou0X0/T8QqfK/M6UBU9KV1ygbcItPuQam',
     'MICROSOFT',
     FALSE,
     '2026-04-18 08:20:00'
 ),
 (
-    'moderador@tripplanner.cl',
-    'hash_mod_secure',
+    'user@exploramundo.com',
+    '$2a$10$dCZppf07IAmZJzAnDmS2Ou0X0/T8QqfK/M6UBU9KV1ygbcItPuQam',
     'LOCAL',
     TRUE,
     CURRENT_TIMESTAMP
 ),
 (
-    'test@demo.com',
-    'hash_test_demo',
+    'invitado@oldtravels.com',
+    '$2a$10$dCZppf07IAmZJzAnDmS2Ou0X0/T8QqfK/M6UBU9KV1ygbcItPuQam',
     'LOCAL',
     TRUE,
     CURRENT_TIMESTAMP
@@ -156,25 +156,25 @@ VALUES
     TRUE
 ),
 (
-    'user1@gmail.com',
+    'agente1@tripplanner.cl',
     '2026-05-22 15:10:00',
     '10.0.0.25',
     TRUE
 ),
 (
-    'user1@gmail.com',
+    'agente1@tripplanner.cl',
     '2026-05-22 15:15:00',
     '10.0.0.25',
     FALSE
 ),
 (
-    'user2@gmail.com',
+    'operador@viajesandinos.com',
     '2026-05-18 08:20:00',
     '172.16.0.3',
     FALSE
 ),
 (
-    'moderador@tripplanner.cl',
+    'user@exploramundo.com',
     CURRENT_TIMESTAMP,
     '127.0.0.1',
     TRUE

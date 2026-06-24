@@ -52,8 +52,6 @@ CREATE TABLE usuarios (
 
     nombre VARCHAR(100) NOT NULL,
 
-    password VARCHAR(255) NOT NULL,
-
     telefono VARCHAR(30),
 
     fecha_registro DATE NOT NULL,
@@ -107,12 +105,11 @@ VALUES
 ('ROLE_INVITADO', 'Acceso limitado', FALSE);
 
 INSERT INTO usuarios
-(email, nombre, password, telefono, fecha_registro, activo, rol_id, organizacion_id)
+(email, nombre, telefono, fecha_registro, activo, rol_id, organizacion_id)
 VALUES
 (
 'admin@tripplanner.cl',
 'Administrador',
-'$2a$10$dCZppf07IAmZJzAnDmS2Ou0X0/T8QqfK/M6UBU9KV1ygbcItPuQam',
 '+56911111111',
 '2026-01-10',
 TRUE,
@@ -123,7 +120,6 @@ TRUE,
 (
 'agente1@tripplanner.cl',
 'Agente Uno',
-'$2a$10$dCZppf07IAmZJzAnDmS2Ou0X0/T8QqfK/M6UBU9KV1ygbcItPuQam',
 '+56922222222',
 '2026-02-05',
 TRUE,
@@ -134,7 +130,6 @@ TRUE,
 (
 'operador@viajesandinos.com',
 'Operador Andes',
-'$2a$10$dCZppf07IAmZJzAnDmS2Ou0X0/T8QqfK/M6UBU9KV1ygbcItPuQam',
 '+56933333333',
 '2026-03-15',
 TRUE,
@@ -145,7 +140,6 @@ TRUE,
 (
 'user@exploramundo.com',
 'Usuario Explora',
-'$2a$10$dCZppf07IAmZJzAnDmS2Ou0X0/T8QqfK/M6UBU9KV1ygbcItPuQam',
 '+56944444444',
 '2026-04-20',
 TRUE,
@@ -156,7 +150,6 @@ TRUE,
 (
 'invitado@oldtravels.com',
 'Invitado Demo',
-'$2a$10$dCZppf07IAmZJzAnDmS2Ou0X0/T8QqfK/M6UBU9KV1ygbcItPuQam',
 '+56955555555',
 '2026-05-01',
 FALSE,

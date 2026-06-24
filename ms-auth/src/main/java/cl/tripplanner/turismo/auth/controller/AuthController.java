@@ -66,10 +66,10 @@ public class AuthController {
         return usuarioClient.findUsuario(email);
     }
     
-    @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
-        return ResponseEntity.ok(authService.login(request));
-    }
+    //@PostMapping("/login")
+    //public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
+    //    return ResponseEntity.ok(authService.login(request));
+    //}
 
     @GetMapping("/exists/{email}")
     public boolean existsByEmail(

@@ -3,6 +3,7 @@ package cl.tripplanner.turismo.auth.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import cl.tripplanner.common.exception.DuplicateResourceException;
@@ -29,11 +30,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthService {
 
+    private final PasswordEncoder passwordEncoder;
     private final AuditoriaLoginRepository auditoriaLoginRepository;
     private final UsuarioAuthRepository usuarioAuthRepository;
     private final AuthMapper authMapper;
     private final UsuarioClient usuarioClient;
     private final MetodoAutenticacionRepository metodoAutenticacionRepository;
+
 
     public List<UsuarioAuthResponse> findAll() {
         return authMapper.toResponseList(usuarioAuthRepository.findAll());
@@ -62,7 +65,11 @@ public class AuthService {
         usuarioClient.findUsuario(request.getEmail());
         MetodoAutenticacion metodo = getMetodoByCodigo(request.getMetodoAutenticacion());
         UsuarioAuth usuario = new UsuarioAuth();
-        usuario.setPasswordHash("Contraseña_totalmente_encriptada");
+        usuario.setPasswordHash(
+            passwordEncoder.encode(
+                request.getPassword()
+            )
+        );
         usuario.setMetodoAutenticacion(metodo);
         usuario.setActivo(true);
         usuario.setUltimoLogin(LocalDateTime.now());
@@ -92,74 +99,72 @@ public class AuthService {
 
     @Transactional
     public AuthResponse login(LoginRequest request) {
-        UsuarioAuth usuario =
-                getUsuarioByEmail(request.getEmail());
 
-        if (!usuario.getActivo()) {
-            registrarLoginFallido(
-                    request.getEmail(),
-                    "IP_del_usuario");
+        UsuarioAuth usuario = getUsuarioByEmail(request.getEmail());
 
+        if (usuario.getActivo() == null || !usuario.getActivo()) {
+            registrarLoginFallido(request.getEmail(), "IP_DEL_USUARIO");
             throw new EntityNotFoundException(
                     "Usuario desactivado",
                     "email",
-                    request.getEmail());
+                    request.getEmail()
+            );
         }
-        if (!usuario.getPasswordHash()
-                .equals(request.getPasswordHash())) {
+            System.out.println("PASS INPUT: " + request.getPassword());
 
-            registrarLoginFallido(
-                    request.getEmail(),
-                    "IP_del_usuario");
+            System.out.println("HASH BD: " + usuario.getPasswordHash());
 
-                    AuthResponse response = new AuthResponse();
-                    response.setEmail(usuario.getEmail());
-                    response.setMessage("Login fallido: Contraseña incorrecta :(");
-                    return response;
-        } else {
-            registrarLoginExitoso(
-                    request.getEmail(),
-                    "IP_del_usuario");
-                    AuthResponse response = new AuthResponse();
-                    response.setEmail(usuario.getEmail());
-                    response.setMessage("Login exitoso");
-                    return response;
+            System.out.println("MATCH: " + passwordEncoder.matches(request.getPassword(), usuario.getPasswordHash()));
+
+        boolean passwordOk = passwordEncoder.matches(
+                request.getPassword(),
+                usuario.getPasswordHash()
+        );
+
+        if (!passwordOk) {
+            registrarLoginFallido(request.getEmail(), "IP_DEL_USUARIO");
+
+            AuthResponse response = new AuthResponse();
+            response.setEmail(usuario.getEmail());
+            response.setMessage("Login fallido: contraseña incorrecta");
+            return response;
         }
+
+        registrarLoginExitoso(request.getEmail(), "IP_DEL_USUARIO");
+
+        AuthResponse response = new AuthResponse();
+        response.setEmail(usuario.getEmail());
+        response.setMessage("Login exitoso");
+        return response;
     }
 
     @Transactional
-    public void registrarLoginExitoso(String email,String ipOrigen) {
+    public void registrarLoginExitoso(String email, String ipOrigen) {
 
-        UsuarioAuth usuario =
-                getUsuarioByEmail(email);
+        UsuarioAuth usuario = getUsuarioByEmail(email);
 
-        AuditoriaLogin auditoria =
-                new AuditoriaLogin();
-
-        auditoria.setUsuario(usuario);
-        auditoria.setIpOrigen(ipOrigen);
-        auditoria.setExitoso(true);
+        AuditoriaLogin auditoria = AuditoriaLogin.builder()
+                .usuario(usuario)
+                .ipOrigen(ipOrigen)
+                .exitoso(true)
+                .build();
 
         auditoriaLoginRepository.save(auditoria);
 
-        usuario.setUltimoLogin(
-                java.time.LocalDateTime.now());
-
+        usuario.setUltimoLogin(java.time.LocalDateTime.now());
         usuarioAuthRepository.save(usuario);
     }
 
     @Transactional
-    public void registrarLoginFallido(String email,String ipOrigen) {
+    public void registrarLoginFallido(String email, String ipOrigen) {
 
-        UsuarioAuth usuario =
-                getUsuarioByEmail(email);
+        UsuarioAuth usuario = getUsuarioByEmail(email);
 
-        AuditoriaLogin auditoria =
-                new AuditoriaLogin();
-
-        auditoria.setUsuario(usuario);
-        auditoria.setIpOrigen(ipOrigen);
-        auditoria.setExitoso(false);
+        AuditoriaLogin auditoria = AuditoriaLogin.builder()
+                .usuario(usuario)
+                .ipOrigen(ipOrigen)
+                .exitoso(false)
+                .build();
 
         auditoriaLoginRepository.save(auditoria);
     }

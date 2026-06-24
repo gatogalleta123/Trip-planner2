@@ -42,12 +42,12 @@
     <!-- Dependencias necesarias para este microservicio -->
     <dependencies>
         <dependency>
-             <groupId>cl.tripplanner</groupId>
+            <groupId>cl.tripplanner</groupId>
             <artifactId>common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-         <!-- Spring Kafka -->
+        <!-- Spring Kafka -->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
@@ -130,6 +130,22 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <!-- DEPENDENCIAS ADICIOALES C3 -->
+        <!-- [SWAGGER-INI] -->
+        <!-- Springdoc OpenAPI: generacion automatica de documentacion Swagger UI -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        </dependency>
+        <!-- [SWAGGER-FIN] -->
+
+        <!--  [HATEOAS-INI]  -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+        </dependency>
+        <!--  [HATEOAS-FIN]  -->
 
     </dependencies>
 

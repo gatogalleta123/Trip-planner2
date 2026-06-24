@@ -37,7 +37,7 @@ public class JwtTokenProvider {
 
         return Jwts.builder()
                 .subject(email)                        // Subject = email del usuario
-                .claim("rol", rol)                     // Claim personalizado: rol
+                .claim("rol", rol)                     // Claim personalizado: rol, no se usa acá porque no esta asi en el config
                 .claim("nombre", nombre)               // Claim personalizado: nombre
                 .issuedAt(ahora)                       // Fecha de emisión
                 .expiration(expiracion)                // Fecha de expiración
