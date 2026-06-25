@@ -2,10 +2,14 @@ package cl.tripplanner.turismo.usuarios.dto;
 
 import java.time.LocalDate;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class UsuarioResponse {
+@EqualsAndHashCode(callSuper = false) // Evita conflictos con los métodos equals de HATEOAS
+public class UsuarioResponse extends RepresentationModel<UsuarioResponse>{
     private String nombre;
     private String email;
     private String telefono;

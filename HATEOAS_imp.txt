@@ -1,3 +1,4 @@
+///CONTROLLER DE USUARIOS
 package cl.tripplanner.turismo.usuarios.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +19,13 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,15 +35,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.Link;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/usuarios")
-@Tag(name = "Usuarios", description = "API para la gestión de perfiles, roles y organizaciones")
+@Tag(
+    name = "Usuarios",
+    description = "API para la gestión de perfiles, roles y organizaciones"
+)
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
@@ -49,29 +50,22 @@ public class UsuarioController {
     // USUARIOS
     // ─────────────────────────────
 
-    //METODO FINDALL MODIFICADO PARA USAR HATEOAS
     @Operation(summary = "Obtener todos los usuarios")
     @ApiResponse(responseCode = "200", description = "Lista de usuarios obtenida correctamente")
     @GetMapping
-    public ResponseEntity<CollectionModel<UsuarioResponse>> findAll() {
-        List<UsuarioResponse> usuarios = usuarioService.findAll();
-        usuarios.forEach(this::addUsuarioLinks);
-        CollectionModel<UsuarioResponse> model = CollectionModel.of(usuarios,
-        linkTo(methodOn(UsuarioController.class).findAll()).withSelfRel());
-        return ResponseEntity.ok(model);
+    public ResponseEntity<List<UsuarioResponse>> findAll() {
+        return ResponseEntity.ok(usuarioService.findAll());
     }
 
-    //METODO FINDBYEMAIL MODIFICADO PARA USAR HATEOAS
     @Operation(summary = "Obtener usuario por email")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Usuario encontrado"),
         @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
     })
     @GetMapping("/{email}")
-    public ResponseEntity<UsuarioResponse> findByEmail( @Parameter(description = "Email del usuario") @PathVariable String email) {
-        UsuarioResponse response = usuarioService.findByEmail(email);
-        addUsuarioLinks(response);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<UsuarioResponse> findByEmail(
+            @Parameter(description = "Email del usuario") @PathVariable String email) {
+        return ResponseEntity.ok(usuarioService.findByEmail(email));
     }
 
     @Operation(summary = "Crear usuario")
@@ -122,35 +116,13 @@ public class UsuarioController {
     }
 
     // ─────────────────────────────
-    // ACTIVAR / DESACTIVAR
-    // ─────────────────────────────
-    @Operation(summary = "Activar usuario", description = "Cambia el estado del usuario a activo")
-    @PutMapping("/{email}/activar")
-    public ResponseEntity<UsuarioResponse> activar(@PathVariable String email) {
-        UsuarioResponse response = usuarioService.activar(email);
-        // Recuerda que aquí puedes llamar a addUsuarioLinks(response) si implementaste HATEOAS
-        return ResponseEntity.ok(response);
-    }
-
-    @Operation(summary = "Desactivar usuario", description = "Cambia el estado del usuario a inactivo")
-    @PutMapping("/{email}/desactivar")
-    public ResponseEntity<UsuarioResponse> desactivar(@PathVariable String email) {
-        UsuarioResponse response = usuarioService.desactivar(email);
-        return ResponseEntity.ok(response);
-    }
-
-    // ─────────────────────────────
     // ORGANIZACIONES
     // ─────────────────────────────
 
-    //METODO MODIFICADO PARA HATEOAS
     @Operation(summary = "Obtener todas las organizaciones")
     @GetMapping("/organizaciones")
-    public ResponseEntity<CollectionModel<OrganizacionResponse>> findAllOrganizaciones() {
-        List<OrganizacionResponse> orgs = usuarioService.findAllOrganizaciones();
-        orgs.forEach(this::addOrganizacionLinks);
-        return ResponseEntity.ok(CollectionModel.of(orgs, 
-                linkTo(methodOn(UsuarioController.class).findAllOrganizaciones()).withSelfRel()));
+    public ResponseEntity<List<OrganizacionResponse>> findAllOrganizaciones() {
+        return ResponseEntity.ok(usuarioService.findAllOrganizaciones());
     }
 
     @Operation(summary = "Obtener organización por ID")
@@ -197,14 +169,10 @@ public class UsuarioController {
     // ROLES
     // ─────────────────────────────
 
-    //METODO MODIFICADO PARA HATEOAS
     @Operation(summary = "Obtener todos los roles")
     @GetMapping("/roles")
-    public ResponseEntity<CollectionModel<RolResponse>> findAllRoles() {
-        List<RolResponse> roles = usuarioService.findAllRoles();
-        roles.forEach(this::addRolLinks);
-        return ResponseEntity.ok(CollectionModel.of(roles, 
-                linkTo(methodOn(UsuarioController.class).findAllRoles()).withSelfRel()));
+    public ResponseEntity<List<RolResponse>> findAllRoles() {
+        return ResponseEntity.ok(usuarioService.findAllRoles());
     }
 
     @Operation(summary = "Obtener rol por ID")
@@ -244,43 +212,62 @@ public class UsuarioController {
     public ResponseEntity<Boolean> existsRol(@PathVariable Integer id) {
         return ResponseEntity.ok(usuarioService.existsRolById(id));
     }
+}
 
-    // ─────────────────────────────
-    // HATEOAS
-    // ─────────────────────────────
-    //ignorar warnings, es puro drama de NullTypeSafety...
+////RESPONSES DE USUARIOS
+package cl.tripplanner.turismo.usuarios.dto;
 
-    // Método para centralizar la creación de links 
-    private void addUsuarioLinks(UsuarioResponse response) {
-        // Link a sí mismo (Self)
-        response.add(linkTo(methodOn(UsuarioController.class).findByEmail(response.getEmail())).withSelfRel());
-        
-        // Link para actualización
-        response.add(linkTo(methodOn(UsuarioController.class).update(response.getEmail(), null)).withRel("update"));
+import java.time.LocalDate;
 
-        // Links condicionales según estado, cambia activar o desactivar de forma interactiva
-        if (response.isActivo()) {
-            response.add(linkTo(methodOn(UsuarioController.class).desactivar(response.getEmail())).withRel("desactivar"));
-        } else {
-            response.add(linkTo(methodOn(UsuarioController.class).activar(response.getEmail())).withRel("activar"));
-        }
-    }
+import lombok.Data;
 
-    // ROLES, HATEOAS
-    private void addRolLinks(RolResponse response) {
-        // Link a sí mismo
-        response.add(linkTo(methodOn(UsuarioController.class).findRolById(response.getId())).withSelfRel());
-        
-        // Link para actualización (según matriz de permisos del profesor) [11]
-        response.add(linkTo(methodOn(UsuarioController.class).updateRol(response.getId(), null)).withRel("update"));
-    }
-
-    // ORGANIZACIONES, HATEOAS
-    private void addOrganizacionLinks(OrganizacionResponse response) {
-        response.add(linkTo(methodOn(UsuarioController.class).findOrganizacionById(response.getId())).withSelfRel());
-        
-        response.add(linkTo(methodOn(UsuarioController.class).updateOrganizacion(response.getId(), null)).withRel("update"));
-    }
+@Data
+public class UsuarioResponse {
+    private String nombre;
+    private String email;
+    private String telefono;
+    private boolean activo;
+    private LocalDate fechaRegistro;
+    private Integer rolId;
+    private Integer organizacionId;
+}
 
 
+package cl.tripplanner.turismo.usuarios.dto;
+
+import java.time.LocalDateTime;
+
+import lombok.Data;
+
+@Data
+public class UsuarioAuthResponse {
+    private String email;
+    private String metodoAutenticacion;
+    private boolean activo;
+    private LocalDateTime ultimoLogin;
+}
+
+
+package cl.tripplanner.turismo.usuarios.dto;
+
+import lombok.Data;
+
+@Data
+public class RolResponse {
+    private Integer id;
+    private String nombre;
+    private String descripcion;
+    private Boolean activo;
+}
+
+package cl.tripplanner.turismo.usuarios.dto;
+
+import lombok.Data;
+
+@Data
+public class OrganizacionResponse {
+    private Integer id;
+    private String nombre;
+    private String dominioEmail;
+    private Boolean activo;
 }

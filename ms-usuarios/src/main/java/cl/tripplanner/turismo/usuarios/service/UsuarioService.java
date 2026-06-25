@@ -55,6 +55,9 @@ public class UsuarioService {
         return usuarioMapper.toResponse(getUsuarioByEmail(email));
     }
 
+//------------------
+//CREATE
+//------------------
     @Transactional
     public UsuarioResponse create(UsuarioRequest request){
         validateEmailUnico(request.getEmail());
@@ -91,6 +94,9 @@ public class UsuarioService {
         return usuarioRepository.existsByEmail(email);
     }
 
+//------------------
+//UPDATE
+//------------------
     @Transactional
     public UsuarioResponse update(String email, UsuarioUpdateRequest request) {
         Usuario usuario = getUsuarioByEmail(email);
@@ -110,6 +116,9 @@ public class UsuarioService {
         return usuarioMapper.toResponse(usuario);
     }
 
+//------------------
+//DELETE
+//------------------
     @Transactional
     public void deleteByEmail(String email) {
         Usuario usuario = getUsuarioByEmail(email);
@@ -127,7 +136,25 @@ public class UsuarioService {
         usuarioEventProducer.sendDeleted(event);
     }
 
-    //ORGANIZACION
+//------------------
+//ACTIVAR/DESACTIVAR
+//------------------
+@Transactional
+public UsuarioResponse activar(String email) {
+    Usuario usuario = getUsuarioByEmail(email);
+    usuario.setActivo(true);
+    // Se guarda el cambio y se mapea a la respuesta DTO 
+    return usuarioMapper.toResponse(usuarioRepository.save(usuario));
+}
+
+@Transactional
+public UsuarioResponse desactivar(String email) {
+    Usuario usuario = getUsuarioByEmail(email);
+    usuario.setActivo(false);
+    return usuarioMapper.toResponse(usuarioRepository.save(usuario));
+}
+
+//ORGANIZACION
     public OrganizacionResponse findOrganizacionById(Integer id) {
     Organizacion organizacion = organizacionRepository.findById(id)
             .orElseThrow(() ->
