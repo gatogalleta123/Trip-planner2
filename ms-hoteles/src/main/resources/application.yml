@@ -1,5 +1,6 @@
+#**GATEWAY: DEJAMOS EL PUERTO EN 0 
 server:
-  port: 9004
+  port: 0
   error:
     include-stacktrace: never
 

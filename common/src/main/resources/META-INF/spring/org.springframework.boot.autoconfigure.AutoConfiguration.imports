@@ -1,1 +1,2 @@
 cl.tripplanner.common.CommonAutoConfiguration
+cl.tripplanner.common.server.InstanceHeaderAutoConfiguration

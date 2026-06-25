@@ -1,0 +1,221 @@
+@echo off
+setlocal
+
+:MENU
+cls
+echo.
+echo ============================================
+echo   TRIPPLANNER - MENU PRINCIPAL
+echo ============================================
+echo.
+echo   [1] Iniciar todos los servicios (dev)
+echo   [2] Iniciar todos los servicios (test)
+echo   [3] Compilar microservicios
+echo   [4] Reinstalar dependencias Maven
+echo.
+echo   --- Servicios individuales ---
+echo   [5] Iniciar Eureka
+echo   [6] Iniciar ms-destinos
+echo   [7] Iniciar ms-reservas
+echo   [8] Iniciar ms-usuarios
+echo   [9] Iniciar ms-hoteles
+echo   [10] Iniciar ms-vuelos
+echo   [11] Iniciar ms-auth
+echo   [12] Iniciar ms-notificaciones
+echo   [13] Iniciar ms-pagos
+echo   [14] Iniciar ms-resennas
+echo   [15] Iniciar ms-reportes
+rem [GATEWAY-INI] Nueva opcion para iniciar el API Gateway de forma individual
+echo   [16] Iniciar API Gateway
+rem [GATEWAY-FIN]
+echo.
+echo   [0] Salir
+echo.
+echo ============================================
+set /p opcion="  Selecciona una opcion: "
+
+if "%opcion%"=="1" goto RUN_ALL
+if "%opcion%"=="2" goto RUN_TEST
+if "%opcion%"=="3" goto COMPILE
+if "%opcion%"=="4" goto INSTALL
+if "%opcion%"=="5" goto RUN_EUREKA
+if "%opcion%"=="6" goto RUN_DESTINOS
+if "%opcion%"=="7" goto RUN_RESERVAS
+if "%opcion%"=="8" goto RUN_USUARIOS
+if "%opcion%"=="9" goto RUN_HOTELES
+if "%opcion%"=="10" goto RUN_VUELOS
+if "%opcion%"=="11" goto RUN_AUTH
+if "%opcion%"=="12" goto RUN_NOTIFICACIONES
+if "%opcion%"=="13" goto RUN_PAGOS
+if "%opcion%"=="14" goto RUN_RESENNAS
+if "%opcion%"=="15" goto RUN_REPORTES
+rem [GATEWAY-INI] Redireccion para la nueva opcion del API Gateway
+if "%opcion%"=="16" goto RUN_GATEWAY
+rem [GATEWAY-FIN]
+if "%opcion%"=="0" goto SALIR
+
+echo.
+echo   Opcion invalida. Intenta de nuevo.
+timeout /t 2 /nobreak > nul
+goto MENU
+
+REM ============================================
+
+:RUN_ALL
+cls
+echo.
+echo ===== Iniciando Eureka Server =====
+start "EUREKA" mvn -f eureka spring-boot:run
+timeout /t 5 /nobreak > nul
+echo ===== Iniciando Microservicios =====
+start "MS-USUARIOS" mvn -f ms-usuarios spring-boot:run
+start "MS-CATALOGO" mvn -f ms-catalogo spring-boot:run
+start "MS-RECURSOS" mvn -f ms-recursos spring-boot:run
+rem [GATEWAY-INI] Se inicia el API Gateway despues de los microservicios para que encuentre servicios en Eureka
+timeout /t 5 /nobreak > nul
+echo ===== Iniciando API Gateway =====
+start "API-GATEWAY" mvn -f api-gateway spring-boot:run
+rem [GATEWAY-FIN]
+echo Todos los servicios han sido lanzados.
+pause
+goto MENU
+
+:RUN_TEST
+cls
+echo.
+echo ===== Iniciando Eureka Server (test) =====
+start "EUREKA" java -jar eureka\target\cl-triskeledu-eureka-1.0-SNAPSHOT.jar --spring.profiles.active=test
+timeout /t 5 /nobreak > nul
+echo ===== Iniciando Microservicios (test) =====
+start "MS-USUARIOS" java -jar ms-usuarios\\target\\cl-triskeledu-usuarios-0.0.1-SNAPSHOT.jar --spring.profiles.active=test
+start "MS-CATALOGO" java -jar ms-catalogo\\target\\cl-triskeledu-catalogo-0.0.1-SNAPSHOT.jar --spring.profiles.active=test
+start "MS-RECURSOS" java -jar ms-recursos\\target\\cl-triskeledu-recursos-0.0.1-SNAPSHOT.jar --spring.profiles.active=test
+rem [GATEWAY-INI] Se inicia el API Gateway en modo test
+timeout /t 5 /nobreak > nul
+echo ===== Iniciando API Gateway (test) =====
+start "API-GATEWAY" java -jar api-gateway\\target\\cl-triskeledu-gateway-0.0.1-SNAPSHOT.jar --spring.profiles.active=test
+rem [GATEWAY-FIN]
+echo Todos los servicios han sido lanzados en modo test.
+pause
+goto MENU
+
+:COMPILE
+cls
+echo.
+echo ===== Compilando microservicios =====
+
+cd /d ms-usuarios
+call mvn clean install -U
+cd /d ..
+
+cd /d ms-catalogo
+call mvn clean install -U
+cd /d ..
+
+cd /d ms-recursos
+call mvn clean install -U
+cd /d ..
+
+echo Compilacion completada.
+pause
+goto MENU
+
+:INSTALL
+cls
+echo.
+echo === REINSTALACION DE DEPENDENCIAS MAVEN ===
+echo.
+echo Eliminando carpeta .m2 ...
+rmdir /s /q %USERPROFILE%\.m2
+echo Eliminando carpetas target ...
+rmdir /s /q eureka\target
+
+rmdir /s /q ms-usuarios\target
+
+rmdir /s /q ms-catalogo\target
+
+rmdir /s /q ms-recursos\target
+echo Descargando dependencias nuevamente con Maven ...
+mvn clean install -U -DskipTests
+echo.
+echo === PROCESO COMPLETADO ===
+pause
+goto MENU
+
+:RUN_EUREKA
+cls
+echo.
+echo ===== Iniciando Eureka =====
+start "EUREKA" mvn -f eureka spring-boot:run
+echo Eureka iniciado.
+pause
+goto MENU
+
+:RUN_USUARIOS
+
+cls
+
+echo.
+
+echo ===== Iniciando ms-usuarios =====
+
+start "MS-USUARIOS" mvn -f ms-usuarios spring-boot:run
+
+echo ms-usuarios iniciado.
+
+pause
+
+goto MENU
+
+
+
+:RUN_CATALOGO
+
+cls
+
+echo.
+
+echo ===== Iniciando ms-catalogo =====
+
+start "MS-CATALOGO" mvn -f ms-catalogo spring-boot:run
+
+echo ms-catalogo iniciado.
+
+pause
+
+goto MENU
+
+
+
+:RUN_RECURSOS
+
+cls
+
+echo.
+
+echo ===== Iniciando ms-recursos =====
+
+start "MS-RECURSOS" mvn -f ms-recursos spring-boot:run
+
+echo ms-recursos iniciado.
+
+pause
+
+goto MENU
+
+:RUN_GATEWAY
+cls
+echo.
+echo ===== Iniciando API Gateway =====
+start "API-GATEWAY" mvn -f api-gateway spring-boot:run
+echo API Gateway iniciado en puerto 9000.
+pause
+goto MENU
+
+:SALIR
+cls
+echo.
+echo   Hasta luego.
+echo.
+endlocal
+exit /b

@@ -1,6 +1,6 @@
-
+#**GATEWAY: DEJAMOS EL PUERTO EN 0 
 server:
-  port: 9001
+  port: 0
   error:
     include-stacktrace: never
 
