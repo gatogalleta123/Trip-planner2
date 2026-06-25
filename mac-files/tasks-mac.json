@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Wait for Eureka",
+      "type": "shell",
+      "command": "sh",
+      "args": [
+        "-c",
+        "timeout=120; elapsed=0; echo 'Esperando a Eureka Server en http://localhost:8761 ...'; while [ $elapsed -lt $timeout ]; do status=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8761/actuator/health); if [ $status -eq 200 ]; then echo 'Eureka Server esta listo!'; exit 0; fi; sleep 3; elapsed=$((elapsed + 3)); echo \"  ... $elapsed s\"; done; echo 'TIMEOUT: Eureka no respondio'; exit 1"
+      ],
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": { "regexp": "^$" },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Esperando",
+          "endsPattern": "listo|TIMEOUT"
+        }
+      }
+    }
+  ]
+}

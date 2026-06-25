@@ -1,0 +1,162 @@
+# ============================================================
+# API GATEWAY - Configuración principal (Global) - TRIPPLANNER
+# ============================================================
+# Este archivo configura el API Gateway como punto de entrada único
+# para todos los microservicios del proyecto TripPlanner.
+# Puerto: 9000
+# Todas las peticiones llegan aquí y son enrutadas al microservicio
+# correspondiente según el path de la URL.
+# ============================================================
+
+spring:
+  application:
+    name: api-gateway  # Nombre con el que se registra en Eureka Server [2]
+  profiles:
+    active: dev        # Perfil por defecto [2]
+
+  cloud:
+    gateway:
+      # Configuración de rutas del Gateway [2, 3]
+      # - id: identificador único de la ruta
+      # - uri: destino usando lb:// (load balanced) para Eureka [4]
+      # - predicates: condiciones de coincidencia (Path) [3]
+      routes:
+        - id: ms-auth
+          uri: lb://ms-auth
+          predicates:
+            - Path=/api/v1/auth/**
+
+        - id: ms-usuarios
+          uri: lb://ms-usuarios
+          predicates:
+            - Path=/api/v1/usuarios/**
+
+        - id: ms-destinos
+          uri: lb://ms-destinos
+          predicates:
+            - Path=/api/destinos/**, /api/paises/**, /api/atracciones/**
+
+        - id: ms-hoteles
+          uri: lb://ms-hoteles
+          predicates:
+            - Path=/api/hoteles/**, /api/habitaciones/**, /api/ciudades/**
+
+        - id: ms-vuelos
+          uri: lb://ms-vuelos
+          predicates:
+            - Path=/api/vuelos/**, /api/rutas/**, /api/aerolineas/**
+
+        - id: ms-reservas
+          uri: lb://ms-reservas
+          predicates:
+            - Path=/reservas/**
+
+        - id: ms-notificaciones
+          uri: lb://ms-notificaciones
+          predicates:
+            - Path=/api/v1/usuarios-proyeccion/**, /notificaciones/**
+
+        - id: ms-pagos
+          uri: lb://ms-pagos
+          predicates:
+            - Path=/cuentas/**, /transacciones/**, /metodos/**
+
+        - id: ms-resennas
+          uri: lb://ms-resennas
+          predicates:
+            - Path=/resennas/**
+
+        - id: ms-reportes
+          uri: lb://ms-reportes
+          predicates:
+            - Path=/api/v1/reportes/**
+
+      # Configuración CORS centralizada para el frontend [5]
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+
+# ============================================================
+# Configuración del servidor [6]
+# ============================================================
+server:
+  port: 9000
+  error:
+    include-stacktrace: never
+
+# ============================================================
+# Configuración de Eureka Client [7]
+# ============================================================
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: "${spring.application.name}:${random.value}"
+    lease-renewal-interval-in-seconds: 15
+    lease-expiration-duration-in-seconds: 60
+
+# ============================================================
+# Configuración de Actuator [8]
+# ============================================================
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    health:
+      show-details: always
+  gateway:
+    enabled: true
+
+# ============================================================
+# Información de la aplicación [9]
+# ============================================================
+info:
+  app:
+    name: ${spring.application.name}
+    version: "1.0.0"
+    description: "API Gateway - Punto de entrada único para microservicios TripPlanner"
+
+# ============================================================
+# PERFIL: Desarrollo (dev) [10]
+# ============================================================
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+logging:
+  level:
+    root: INFO
+    cl.tripplanner.gateway: DEBUG # Cambiado a tu dominio [10]
+    org.springframework.cloud.gateway: INFO
+
+# ============================================================
+# PERFIL: Producción (prod) [11]
+# ============================================================
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+logging:
+  level:
+    root: INFO
+    cl.tripplanner.gateway: INFO
+    org.springframework.cloud.gateway: WARN
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://eureka-server:8761/eureka} # [11]
