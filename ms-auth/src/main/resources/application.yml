@@ -3,6 +3,7 @@ server:
   port: 0
   error:
     include-stacktrace: never
+  forward-headers-strategy: framework
 
 spring:
   application:
@@ -20,6 +21,7 @@ spring:
     
 #***** JWT *****
 #Contraseña desencriptada: "tokenSecretKeyTurismo2026TripplannerSecurity"
+#CONTRASEÑA Temporal: TripPlanner@2026
 jwt:
   secret: "dG9rZW5TZWNyZXRLZXlUdXJpc21vMjAyNlRyaXBwbGFubmVyU2VjdXJpdHk="
   expiration-ms: 3600000
@@ -30,8 +32,11 @@ jwt:
 springdoc:
   api-docs:
     path: /v3/api-docs
+
   swagger-ui:
     path: /swagger-ui.html
+    config-url: /docs/auth/v3/api-docs/swagger-config
+    url: /docs/auth/v3/api-docs
 # [SWAGGER-FIN] 
   
 eureka:

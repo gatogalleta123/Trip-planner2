@@ -128,7 +128,7 @@ public class UsuarioController {
     @PutMapping("/{email}/activar")
     public ResponseEntity<UsuarioResponse> activar(@PathVariable String email) {
         UsuarioResponse response = usuarioService.activar(email);
-        // Recuerda que aquí puedes llamar a addUsuarioLinks(response) si implementaste HATEOAS
+        addUsuarioLinks(response);
         return ResponseEntity.ok(response);
     }
 
@@ -136,6 +136,7 @@ public class UsuarioController {
     @PutMapping("/{email}/desactivar")
     public ResponseEntity<UsuarioResponse> desactivar(@PathVariable String email) {
         UsuarioResponse response = usuarioService.desactivar(email);
+        addUsuarioLinks(response);
         return ResponseEntity.ok(response);
     }
 

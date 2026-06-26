@@ -30,6 +30,20 @@ spring:
           uri: lb://ms-usuarios
           predicates:
             - Path=/api/v1/usuarios/**
+        
+        - id: usuarios-docs
+          uri: lb://ms-usuarios
+          predicates:
+            - Path=/docs/usuarios/**
+          filters:
+            - RewritePath=/docs/usuarios/(?<segment>.*), /${segment}
+
+        - id: auth-docs
+          uri: lb://ms-auth
+          predicates:
+            - Path=/docs/auth/**
+          filters:
+            - RewritePath=/docs/auth/(?<segment>.*), /${segment}
 
         - id: ms-destinos
           uri: lb://ms-destinos
@@ -78,6 +92,10 @@ spring:
             allowedOrigins: "*"
             allowedMethods: "*"
             allowedHeaders: "*"
+      forwarded:
+        enabled: true
+      default-filters:
+        - PreserveHostHeader
 
 # ============================================================
 # Configuración del servidor [6]
