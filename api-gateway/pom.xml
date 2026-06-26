@@ -86,8 +86,6 @@
             <!--
             Spring Boot Maven Plugin:
             Genera un JAR ejecutable (fat jar) con todas las dependencias embebidas.
-            El goal 'repackage' crea el archivo cl-triskeledu-gateway-0.0.1-SNAPSHOT.jar
-            que puede ejecutarse directamente con: java -jar cl-triskeledu-gateway-0.0.1-SNAPSHOT.jar
             -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -98,7 +96,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>cl.tripplanner.gateway.BibliotecaGatewayApplication</mainClass>
+                    <mainClass>cl.tripplanner.gateway.TurismoGatewayApplication</mainClass>
                 </configuration>
             </plugin>
 

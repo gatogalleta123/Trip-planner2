@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "TurismoGatewayApplication",
+      "request": "launch",
+      "mainClass": "cl.tripplanner.gateway.TurismoGatewayApplication",
+      "projectName": "api-gateway"
+    },
+    {
+      "type": "java",
       "name": "Temporal",
       "request": "launch",
       "mainClass": "cl.tripplanner.turismo.auth.Temporal",
@@ -22,8 +29,7 @@
       "name": "Debug API Gateway",
       "request": "launch",
       "cwd": "${workspaceFolder}/api-gateway",
-      "mainClass": "cl.triskeledu.gateway.BibliotecaGatewayApplication",
-      "projectName": "cl-triskeledu-gateway",
+      "mainClass": "cl.tripplanner.gateway.TurismoGatewayApplication",
       "vmArgs": "-Dcom.sun.management.jmxremote.port=10900 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false",
       "preLaunchTask": "Wait for Eureka"
     },

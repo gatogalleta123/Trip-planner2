@@ -15,7 +15,7 @@
     </parent>
 
     <groupId>cl.tripplanner.turismo</groupId>
-    <artifactId>ms-destinos</artifactId>
+    <artifactId>cl-tripplanner-turismo-destinos</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <name>Modulo de Destinos</name>

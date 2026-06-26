@@ -60,7 +60,7 @@
     <!-- Version de Java a utilizar -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <spring-boot.version>3.5.13</spring-boot.version>
+    <spring-boot.version>3.5.15</spring-boot.version>
     <!-- Version de Spring Boot base para microservicios -->
     <spring-cloud.version>2025.0.0</spring-cloud.version>
     <!-- Version de Spring Cloud -->

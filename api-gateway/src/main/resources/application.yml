@@ -16,7 +16,7 @@ spring:
 
   cloud:
     gateway:
-      # Configuración de rutas del Gateway [2, 3]
+      # Configuración de rutas del Gateway
       # - id: identificador único de la ruta
       # - uri: destino usando lb:// (load balanced) para Eureka [4]
       # - predicates: condiciones de coincidencia (Path) [3]
