@@ -14,22 +14,22 @@ echo       Contenedores y volumenes anteriores eliminados.
 echo.
 
 rem Paso 2: Compilar todos los JARs con Maven
-echo [2/5] COMPILANDO PROYECTO JAVA CON MAVEN...
-echo       (common, eureka, api-gateway, ms-vuelos, ms-usuarios, ms-reservas, ms-resennas, ms-reportes, ms-pagos, ms-notificaciones, ms-hoteles, ms-destinos, ms-auth)
-echo.
-call mvn clean package -DskipTests -q
-if %ERRORLEVEL% NEQ 0 (
-    echo.
-    echo ****************************************************
-    echo ERROR: La compilacion Maven fallo.
-    echo Revisa los errores arriba y corrige antes de reintentar.
-    echo ****************************************************
-    pause
-    exit /b 1
-)
-echo       Compilacion exitosa. JARs generados.
-echo.
-
+rem echo [2/5] COMPILANDO PROYECTO JAVA CON MAVEN...
+rem echo       (common, eureka, api-gateway, ms-vuelos, ms-usuarios, ms-reservas, ms-resennas, ms-reportes, ms-pagos, ms-notificaciones, ms-hoteles, ms-destinos, ms-auth)
+rem echo.
+rem call mvn clean package -DskipTests -q
+rem if %ERRORLEVEL% NEQ 0 (
+rem     echo.
+rem     echo ****************************************************
+rem     echo ERROR: La compilacion Maven fallo.
+rem     echo Revisa los errores arriba y corrige antes de reintentar.
+rem     echo ****************************************************
+rem     pause
+rem     exit /b 1
+rem )
+rem echo       Compilacion exitosa. JARs generados.
+rem echo.
+rem 
 rem Paso 3: Levantar Base de Datos y Mensajeria
 echo [3/5] INICIANDO POSTGRES Y KAFKA...
 docker compose up -d postgres kafka

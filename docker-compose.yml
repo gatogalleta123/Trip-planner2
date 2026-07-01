@@ -261,7 +261,6 @@ services:
     ms-usuarios:
       build: ./ms-usuarios
       image: tripplanner-ms-usuarios
-      container_name: ms-usuarios
       depends_on:
         eureka-server:
           condition: service_healthy

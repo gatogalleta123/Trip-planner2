@@ -21,18 +21,18 @@ echo       Infraestructura detectada y en ejecucion.
 echo.
 
 rem Paso 2: Compilar especificamente ms-usuarios y common
-echo [2/4] RE-COMPILANDO MS-USUARIOS Y COMMON...
-call mvn clean package -pl common,ms-usuarios -am -DskipTests -q
-if %ERRORLEVEL% NEQ 0 (
-    echo.
-    echo ****************************************************
-    echo ERROR: La compilacion de ms-usuarios fallo.
-    echo ****************************************************
-    pause
-    exit /b 1
-)
-echo       Compilacion exitosa. JAR de ms-usuarios actualizado.
-echo.
+rem echo [2/4] RE-COMPILANDO MS-USUARIOS Y COMMON...
+rem call mvn clean package -pl common,ms-usuarios -am -DskipTests -q
+rem if %ERRORLEVEL% NEQ 0 (
+rem     echo.
+rem     echo ****************************************************
+rem     echo ERROR: La compilacion de ms-usuarios fallo.
+rem     echo ****************************************************
+rem     pause
+rem     exit /b 1
+rem )
+rem echo       Compilacion exitosa. JAR de ms-usuarios actualizado.
+rem echo.
 
 rem Paso 3: Detener instancia anterior si existe y lanzar nueva
 echo [3/4] LANZANDO CONTENEDOR MS-USUARIOS...
