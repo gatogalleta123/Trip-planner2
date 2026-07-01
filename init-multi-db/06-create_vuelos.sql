@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS aerolineas;
 CREATE TABLE aerolineas (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(120) NOT NULL UNIQUE,
-    codigo_iata CHAR(2) NOT NULL UNIQUE,
+    codigo_iata VARCHAR(2) NOT NULL UNIQUE,
     activo BOOLEAN NOT NULL DEFAULT TRUE
 );
 

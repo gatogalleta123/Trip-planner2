@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.kafka.common.errors.DuplicateResourceException;
+import cl.tripplanner.common.exception.DuplicateResourceException;
 import org.springframework.stereotype.Service;
 
 import cl.tripplanner.common.event.UsuarioCreatedEvent;
@@ -74,6 +74,7 @@ public class UsuarioService {
         usuario.setRol(rol);
         usuario.setOrganizacion(organizacion);
         usuario.setFechaRegistro(LocalDate.now());
+        usuario.setActivo(true);
         usuarioMapper.updateEntity(request, usuario);
         usuarioRepository.save(usuario);
         UsuarioCreatedEvent event = new UsuarioCreatedEvent(usuario.getEmail(), usuario.getNombre(), usuario.getActivo(), LocalDateTime.now());
@@ -87,7 +88,7 @@ public class UsuarioService {
     }
 
     private void validateEmailUnico(String email) {
-        usuarioRepository.findByEmail(email).ifPresent(l -> { throw new DuplicateResourceException("Usuario con el email ya existe: " + email); });
+        usuarioRepository.findByEmail(email).ifPresent(l -> { throw new DuplicateResourceException("Usuario", "email", email, "email duplicado" ); });
     }
 
     public boolean existsByEmail(String email) {

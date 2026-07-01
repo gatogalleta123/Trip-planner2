@@ -12,7 +12,7 @@ CREATE TABLE cuentas (
     id SERIAL PRIMARY KEY,
     usuario_id INT NOT NULL,
     saldo NUMERIC(12,2) NOT NULL CHECK (saldo >= 0),
-    moneda CHAR(3) NOT NULL,
+    moneda VARCHAR(3) NOT NULL,
     activo BOOLEAN NOT NULL DEFAULT TRUE,
     CONSTRAINT uq_cuenta_usuario UNIQUE (usuario_id, moneda)
 );

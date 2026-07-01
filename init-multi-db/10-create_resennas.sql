@@ -34,6 +34,20 @@ CREATE TABLE resennas (
     CONSTRAINT uq_resenna UNIQUE (usuario_id, destino_id)
 );
 
+CREATE TABLE votos_resennas (
+    id SERIAL PRIMARY KEY,
+    resenna_codigo VARCHAR(255),
+    usuario VARCHAR(150),
+    util BOOLEAN,
+    fecha TIMESTAMP
+);
+
+CREATE TABLE vuelos_proyeccion (
+    codigo VARCHAR(255) PRIMARY KEY,
+    origen VARCHAR(255),
+    destino VARCHAR(255)
+);
+
 CREATE INDEX idx_resennas_usuario ON resennas(usuario_id);
 CREATE INDEX idx_resennas_destino ON resennas(destino_id);
 

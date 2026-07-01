@@ -23,7 +23,7 @@ CREATE TABLE notificaciones (
 );
 
 CREATE TABLE logs_notificaciones (
-    id SERIAL PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     notificacion_codigo VARCHAR(20) NOT NULL,
     fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     estado VARCHAR(30),

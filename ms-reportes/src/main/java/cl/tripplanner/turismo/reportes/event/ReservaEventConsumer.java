@@ -21,7 +21,7 @@ public class ReservaEventConsumer {
     private final ReservaProyeccionService reservaProyeccionService;
     @KafkaListener(
         topics =  "reservas.reserva.created",
-        groupId = "ms-reservas",
+        groupId = "ms-reportes",
         properties = {"spring.json.value.default.type=cl.tripplanner.common.event.ReservaCreatedEvent"}
     )
     @Transactional
@@ -32,7 +32,7 @@ public class ReservaEventConsumer {
 
     @KafkaListener(
     topics = "reservas.reserva.updated",
-    groupId = "ms-reservas",
+    groupId = "ms-reportes",
     properties = {
         "spring.json.value.default.type=cl.tripplanner.common.event.ReservaUpdatedEvent"
     }
@@ -45,7 +45,7 @@ public class ReservaEventConsumer {
 
     @KafkaListener(
     topics = "reservas.reserva.deleted",
-    groupId = "ms-reservas",
+    groupId = "ms-reportes",
     properties = {"spring.json.value.default.type=cl.tripplanner.common.event.ReservaDeletedEvent"}
     )
     @Transactional

@@ -48,6 +48,12 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+                <!-- Spring Kafka -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+
         <!-- Spring Web: Controladores REST -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -125,6 +131,12 @@
             <optional>true</optional>
         </dependency>
 
+                <!-- Spring Boot Actuator: endpoints de monitoreo y salud -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        
     </dependencies>
 
     <!-- Empaquetado ejecutable con Spring Boot -->

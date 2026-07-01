@@ -51,7 +51,7 @@ ON usuarios_auth(activo);
 -- TABLA AUDITORIA LOGIN
 -- ----------------------------
 CREATE TABLE auditoria_login (
-    id SERIAL PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
 
     usuario_email VARCHAR(120),
 

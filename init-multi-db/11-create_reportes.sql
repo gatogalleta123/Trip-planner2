@@ -4,21 +4,22 @@
 -- 2. Eliminación de tablas en orden jerárquico inverso
 DROP TABLE IF EXISTS ejecuciones;
 DROP TABLE IF EXISTS reportes;
+DROP TABLE IF EXISTS reservas_proyeccion;
 DROP TABLE IF EXISTS fuentes;
 
 -- 3. Creación de tablas
 
 CREATE TABLE fuentes (
-    id SERIAL PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     nombre VARCHAR(120) NOT NULL UNIQUE,
     tipo VARCHAR(50) NOT NULL, -- ventas, reservas, usuarios
     activo BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE reportes (
-    id SERIAL PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     nombre VARCHAR(150) NOT NULL,
-    fuente_id INT NOT NULL,
+    fuente_id BIGINT NOT NULL,
     formato VARCHAR(20) NOT NULL, -- pdf, csv, json
     activo BOOLEAN NOT NULL DEFAULT TRUE,
     CONSTRAINT fk_fuente FOREIGN KEY (fuente_id) REFERENCES fuentes(id),
@@ -28,8 +29,8 @@ CREATE TABLE reportes (
 CREATE INDEX idx_reportes_fuente ON reportes(fuente_id);
 
 CREATE TABLE ejecuciones (
-    id SERIAL PRIMARY KEY,
-    reporte_id INT NOT NULL,
+    id BIGSERIAL PRIMARY KEY,
+    reporte_id BIGINT NOT NULL,
     fecha_ejecucion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     estado VARCHAR(20) NOT NULL,
     url_resultado VARCHAR(255),
@@ -39,6 +40,12 @@ CREATE TABLE ejecuciones (
 
 CREATE INDEX idx_ejecuciones_reporte ON ejecuciones(reporte_id);
 CREATE INDEX idx_ejecuciones_estado ON ejecuciones(estado);
+
+CREATE TABLE reservas_proyeccion (
+    id VARCHAR(20) PRIMARY KEY,
+    cliente_id VARCHAR(20) NOT NULL,
+    estado VARCHAR(20) NOT NULL
+);
 
 -- 4. Poblar tablas con datos de prueba
 

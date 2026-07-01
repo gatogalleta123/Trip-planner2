@@ -36,6 +36,7 @@ public class ReservaController {
         reservaService.cancelarReserva(id);
     }
 
+
     @GetMapping("/cliente/{clienteId}")
     public List<Reserva> historial(@PathVariable Integer clienteId) {
         return reservaService.historialCliente(clienteId);

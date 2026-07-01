@@ -2319,7 +2319,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.kafka.common.errors.DuplicateResourceException;
+import cl.tripplanner.common.exception.DuplicateResourceException;
 import org.springframework.stereotype.Service;
 
 import cl.tripplanner.common.event.UsuarioCreatedEvent;
