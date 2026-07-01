@@ -116,7 +116,7 @@ echo.
 echo === REINSTALACION DE DEPENDENCIAS MAVEN ===
 echo Eliminando carpetas target y cache local...
 rmdir /s /q %USERPROFILE%\.m2\repository\cl\tripplanner
-mvn clean install -U -DskipTests [22]
+mvn clean install -U -DskipTests 
 echo === PROCESO COMPLETADO ===
 pause
 goto MENU
